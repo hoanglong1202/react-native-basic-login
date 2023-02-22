@@ -4,29 +4,31 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import {theme} from '../core/theme';
 
 export default function Background({children}) {
   return (
-    <ScrollView>
-      <ImageBackground
-        source={require('../assets/background_dot.png')}
-        resizeMode="repeat"
-        style={styles.background}>
-        <KeyboardAvoidingView style={styles.container} behavior="padding">
-          {children}
-        </KeyboardAvoidingView>
-      </ImageBackground>
+    <ScrollView style={styles.viewContainer}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <>{children}</>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  viewContainer: {
+    flex: 1,
+    backgroundColor: theme.colors.surface,
+  },
   background: {
     flex: 1,
     width: '100%',
-    backgroundColor: theme.colors.surface,
   },
   container: {
     flex: 1,
