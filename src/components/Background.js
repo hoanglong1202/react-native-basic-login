@@ -1,23 +1,23 @@
 import React from 'react';
 import {
-  ImageBackground,
-  StyleSheet,
-  KeyboardAvoidingView,
-  ScrollView,
-  TouchableWithoutFeedback,
   Keyboard,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native';
 import {theme} from '../core/theme';
 
 export default function Background({children}) {
   return (
-    <ScrollView style={styles.viewContainer}>
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <SafeAreaView style={styles.viewContainer}>
+      <ScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <>{children}</>
+          <View style={styles.container}>{children}</View>
         </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
     width: '100%',
     maxWidth: 340,
     alignSelf: 'center',
