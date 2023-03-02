@@ -1,48 +1,27 @@
 import React, {useRef, useState} from 'react';
-import {Image, StyleSheet} from 'react-native';
-import SelectDropdown from 'react-native-select-dropdown';
+import {StyleSheet} from 'react-native';
+import PincodeInput from 'react-native-pincode-input';
 import Background from '../components/Background';
 import Button from '../components/Button';
 import Header from '../components/Header';
-import TextInput from '../components/TextInput';
-import {emailValidator} from '../helpers/emailValidator';
-import {nameValidator} from '../helpers/nameValidator';
-import PincodeInput from 'react-native-pincode-input';
+import Paragraph from '../components/Paragraph';
+import {theme} from '../core/theme';
 
 export default function InputPin({navigation}) {
   const [pin, setPin] = useState('');
   const pincodeInput = useRef(null);
-  const [name, setName] = useState({value: '', error: ''});
-  const [address, setAddress] = useState({value: '', error: ''});
-  const [phone, setPhone] = useState({value: '', error: ''});
-  const countries = ['Male', 'Female'];
-
-  const shakePincode = () => {
-    this.pincodeInput.shake();
-  };
 
   return (
     <Background>
       <Header>Create New Pin</Header>
+      <Paragraph>Add a PIN number to make your account more secure</Paragraph>
       <PincodeInput
         ref={pincodeInput}
         length={4}
-        containerStyle={{
-          display: 'flex',
-          width: '100%',
-          height: 200,
-          justifyContent: 'center',
-        }}
-        circleContainerStyle={{
-          paddingHorizontal: 32,
-        }}
-        circleEmptyStyle={{
-          borderWidth: 1,
-          borderColor: '#424242',
-        }}
-        circleFilledStyle={{
-          backgroundColor: '#424242',
-        }}
+        containerStyle={styles.container}
+        circleContainerStyle={styles.circleContainer}
+        circleEmptyStyle={styles.circleEmpty}
+        circleFilledStyle={styles.circleFilled}
         pin={pin}
         onTextChange={pin => setPin(pin)}
       />
@@ -56,6 +35,22 @@ export default function InputPin({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    width: '100%',
+    height: 200,
+    justifyContent: 'center',
+  },
+  circleContainer: {
+    paddingHorizontal: 32,
+  },
+  circleEmpty: {
+    borderWidth: 1,
+    borderColor: theme.colors.third,
+  },
+  circleFilled: {
+    backgroundColor: theme.colors.black,
+  },
   selectButton: {
     width: '100%',
     borderRadius: 10,
