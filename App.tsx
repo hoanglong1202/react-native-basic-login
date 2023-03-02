@@ -11,6 +11,7 @@ import {
   Dashboard,
   VerifyIdentity,
   Residency,
+  PhotoCamera,
 } from './src/screens';
 
 const Stack = createStackNavigator();
@@ -30,6 +31,7 @@ export default function App() {
           <Stack.Screen name="Dashboard" component={Dashboard} />
           <Stack.Screen name="VerifyIdentity" component={VerifyIdentity} />
           <Stack.Screen name="Residency" component={Residency} />
+          <Stack.Screen name="PhotoCamera" component={PhotoCamera} />
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}

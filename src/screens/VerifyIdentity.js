@@ -21,7 +21,7 @@ export default function VerifyIdentity({navigation}) {
         onPress={() =>
           navigation.reset({
             index: 0,
-            routes: [{name: 'Residency'}],
+            routes: [{name: 'PhotoCamera'}],
           })
         }>
         Verify Identity

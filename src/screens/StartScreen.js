@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Divider, Text} from 'react-native-paper';
+import {Camera} from 'react-native-vision-camera';
 import Background from '../components/Background';
-import Logo from '../components/Logo';
-import Header from '../components/Header';
 import Button from '../components/Button';
+import Header from '../components/Header';
+import Logo from '../components/Logo';
 import Paragraph from '../components/Paragraph';
-import {Text, Divider} from 'react-native-paper';
-import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {theme} from '../core/theme';
 
 export default function StartScreen({navigation}) {
@@ -43,7 +44,7 @@ export default function StartScreen({navigation}) {
       <Button
         mode="contained"
         buttonColor={theme.colors.primary}
-        onPress={() => navigation.navigate('LoginScreen')}>
+        onPress={() => navigation.navigate('PhotoCamera')}>
         Sign in with password
       </Button>
       <View style={styles.row}>
