@@ -13,6 +13,7 @@ import {
   Residency,
   PhotoCamera,
   FillProfile,
+  InputPin,
 } from './src/screens';
 
 const Stack = createStackNavigator();
@@ -34,6 +35,7 @@ export default function App() {
           <Stack.Screen name="Residency" component={Residency} />
           <Stack.Screen name="PhotoCamera" component={PhotoCamera} />
           <Stack.Screen name="FillProfile" component={FillProfile} />
+          <Stack.Screen name="InputPin" component={InputPin} />
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}

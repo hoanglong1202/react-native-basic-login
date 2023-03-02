@@ -5952,6 +5952,11 @@ react-native-paper@^5.2.0:
     color "^3.1.2"
     use-event-callback "^0.1.0"
 
+react-native-pincode-input@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-pincode-input/-/react-native-pincode-input-1.0.2.tgz#86e97c4a078f0d9d281958d0a0d95502ec156c57"
+  integrity sha512-Z7WjqX1CVOFZUez6rL0MtsD/vbLfm2tefMBlQm4ONFlk1bDNSPS0mzzRic2LYO9QqEZbBy1UCEcxmPj6r+vwxw==
+
 react-native-reanimated@^2.14.4:
   version "2.14.4"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.14.4.tgz#3fa3da4e7b99f5dfb28f86bcf24d9d1024d38836"

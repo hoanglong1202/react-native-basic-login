@@ -7,3 +7,4 @@ export {default as Residency} from './Residency';
 export {default as VerifyIdentity} from './VerifyIdentity';
 export {default as PhotoCamera} from './PhotoCamera';
 export {default as FillProfile} from './FillProfile';
+export {default as InputPin} from './InputPin';
