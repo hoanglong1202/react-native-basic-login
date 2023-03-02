@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import Background from '../components/Background';
 import Button from '../components/Button';
@@ -8,7 +8,9 @@ import TextInput from '../components/TextInput';
 import {emailValidator} from '../helpers/emailValidator';
 import {nameValidator} from '../helpers/nameValidator';
 
-export default function FillProfile({navigation}) {
+export default function FillProfile({route, navigation}) {
+  const {imageUri} = route.params;
+  console.log(imageUri);
   const [email, setEmail] = useState({value: '', error: ''});
   const [name, setName] = useState({value: '', error: ''});
   const [address, setAddress] = useState({value: '', error: ''});
@@ -32,8 +34,9 @@ export default function FillProfile({navigation}) {
   return (
     <Background>
       <Header>Fill your profile</Header>
-      <Image source={require('../assets/avatar.png')} style={styles.image} />
-
+      <View style={styles.imageContainer}>
+        <Image source={{uri: imageUri}} style={styles.image} />
+      </View>
       <TextInput
         label="Name"
         returnKeyType="next"
@@ -95,9 +98,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: 8,
   },
-  image: {
+  imageContainer: {
+    borderRadius: 100,
     width: 200,
+    marginBottom: 20,
+  },
+  image: {
+    width: '100%',
     height: 200,
-    marginBottom: 8,
+    borderRadius: 100,
   },
 });

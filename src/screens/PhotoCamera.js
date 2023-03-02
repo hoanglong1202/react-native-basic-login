@@ -2,48 +2,30 @@ import React, {useRef, useState} from 'react';
 import {
   Alert,
   Dimensions,
+  Image,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
-import {Image} from 'react-native';
 import {theme} from '../core/theme';
 
 const windowWidth = Dimensions.get('window').width;
 
 // type Props = NativeStackScreenProps<Routes, 'CameraPage'>;
 export default function PhotoCamera({navigation}) {
-  const [takingPic, setTakingPic] = useState(false);
-  const camera = useRef(null);
-  const takePicture = async () => {
-    if (camera && !takingPic) {
-      let options = {
-        quality: 0.85,
-        fixOrientation: true,
-        forceUpOrientation: true,
-      };
-
-      setTakingPic(true);
-
-      try {
-        const data = await camera.takePictureAsync(options);
-
-        Alert.alert('Success', JSON.stringify(data));
-      } catch (err) {
-        Alert.alert('Error', 'Failed to take picture: ' + (err.message || err));
-        return;
-      } finally {
-        setTakingPic(false);
-      }
-    }
+  const [image, setImage] = useState(null);
+  const takePicture = async camera => {
+    const options = {quality: 0.5, base64: true};
+    const data = await camera.takePictureAsync(options);
+    setImage(data.uri);
+    navigation.navigate('FillProfile', {imageUri: data.uri});
   };
+
   return (
-    <View style={styles.container} onPress={takePicture}>
+    <View style={styles.container}>
       <RNCamera
-        ref={camera}
-        captureAudio={false}
-        onPress={takePicture}
         style={styles.cameraContainer}
         type={RNCamera.Constants.Type.back}
         androidCameraPermissionOptions={{
@@ -52,19 +34,31 @@ export default function PhotoCamera({navigation}) {
           buttonPositive: 'Ok',
           buttonNegative: 'Cancel',
         }}
-      />
-
-      <View style={styles.wrapperButton}>
-        <TouchableOpacity
-          style={styles.button}
-          // onPress={() => navigation.replace('FillProfile')}
-          onPress={takePicture}>
-          <Image
-            source={require('../assets/camera.png')}
-            style={styles.image}
-          />
-        </TouchableOpacity>
-      </View>
+        androidRecordAudioPermissionOptions={{
+          title: 'Permission to use audio recording',
+          message: 'We need your permission to use your audio',
+          buttonPositive: 'Ok',
+          buttonNegative: 'Cancel',
+        }}>
+        {({camera, status, recordAudioPermissionStatus}) => {
+          if (status !== 'READY') {
+            return <Text>No</Text>;
+          }
+          return (
+            <View style={styles.wrapperButton}>
+              {/* <Image source={{uri: image}} style={{width: 100, height: 100}} /> */}
+              <TouchableOpacity
+                onPress={() => takePicture(camera)}
+                style={styles.button}>
+                <Image
+                  source={require('../assets/camera.png')}
+                  style={styles.image}
+                />
+              </TouchableOpacity>
+            </View>
+          );
+        }}
+      </RNCamera>
     </View>
   );
 }
