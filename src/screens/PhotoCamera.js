@@ -57,7 +57,7 @@ export default function PhotoCamera({navigation}) {
       <View style={styles.wrapperButton}>
         <TouchableOpacity
           style={styles.button}
-
+          onPress={() => navigation.replace('FillProfile')}
           //  onPress={takePicture}
         >
           <Image
