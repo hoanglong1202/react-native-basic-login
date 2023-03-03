@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import ActionSheet from 'react-native-actions-sheet';
-import SelectDropdown from 'react-native-select-dropdown';
+import {launchImageLibrary} from 'react-native-image-picker';
 import Background from '../components/Background';
 import Button from '../components/Button';
 import Header from '../components/Header';
@@ -13,10 +13,11 @@ import {nameValidator} from '../helpers/nameValidator';
 export default function FillProfile({route, navigation}) {
   const [email, setEmail] = useState({value: '', error: ''});
   const actionSheetRef = useRef(null);
+  const actionGenderSheetRef = useRef(null);
   const [name, setName] = useState({value: '', error: ''});
   const [address, setAddress] = useState({value: '', error: ''});
   const [phone, setPhone] = useState({value: '', error: ''});
-  const countries = ['Male', 'Female'];
+  const [gender, setGender] = useState({value: '', error: ''});
 
   const onSignUpPressed = () => {
     const emailError = emailValidator(email.value);
@@ -30,6 +31,16 @@ export default function FillProfile({route, navigation}) {
       index: 0,
       routes: [{name: 'InputPin'}],
     });
+  };
+
+  const openImageLibrary = async () => {
+    actionSheetRef.current?.hide();
+    await launchImageLibrary();
+  };
+
+  const changeGender = async gender => {
+    actionGenderSheetRef.current?.hide();
+    setGender({value: gender, error: ''});
   };
 
   return (
@@ -87,29 +98,26 @@ export default function FillProfile({route, navigation}) {
         value={address.value}
         onChangeText={text => setAddress({value: text, error: ''})}
       />
-      <SelectDropdown
-        data={countries}
-        onSelect={(selectedItem, index) => {
-          console.log(selectedItem, index);
-        }}
-        buttonTextAfterSelection={(selectedItem, index) => {
-          return selectedItem;
-        }}
-        rowTextForSelection={(item, index) => {
-          return item;
-        }}
-        buttonStyle={styles.selectButton}
-        defaultButtonText="Gender"
-      />
+      <TouchableOpacity
+        style={styles.genderContainer}
+        onPress={() => actionGenderSheetRef.current?.show()}>
+        <TextInput label="Gender" value={gender.value} editable={false} />
+      </TouchableOpacity>
+
+      <ActionSheet ref={actionGenderSheetRef}>
+        <View style={styles.actionSheetContainer}>
+          <Button mode="outlined" onPress={() => changeGender('Male')}>
+            Male
+          </Button>
+          <Button mode="outlined" onPress={() => changeGender('Female')}>
+            Female
+          </Button>
+        </View>
+      </ActionSheet>
 
       <ActionSheet ref={actionSheetRef}>
         <View style={styles.actionSheetContainer}>
-          <Button
-            mode="outlined"
-            onPress={() => {
-              actionSheetRef.current?.hide();
-              navigation.navigate('PhotoCamera');
-            }}>
+          <Button mode="outlined" onPress={openImageLibrary}>
             Select from library
           </Button>
           <Button
@@ -162,5 +170,9 @@ const styles = StyleSheet.create({
   actionSheetContainer: {
     height: 200,
     padding: 10,
+  },
+  genderContainer: {
+    width: '100%',
+    marginBottom: 10,
   },
 });

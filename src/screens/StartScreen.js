@@ -44,7 +44,7 @@ export default function StartScreen({navigation}) {
       <Button
         mode="contained"
         buttonColor={theme.colors.primary}
-        onPress={() => navigation.navigate('FillProfile')}>
+        onPress={() => navigation.navigate('PhotoCamera')}>
         Sign in with password
       </Button>
       <View style={styles.row}>
