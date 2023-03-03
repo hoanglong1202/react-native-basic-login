@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import ActionSheet from 'react-native-actions-sheet';
 import SelectDropdown from 'react-native-select-dropdown';
 import Background from '../components/Background';
 import Button from '../components/Button';
@@ -11,6 +12,7 @@ import {nameValidator} from '../helpers/nameValidator';
 
 export default function FillProfile({route, navigation}) {
   const [email, setEmail] = useState({value: '', error: ''});
+  const actionSheetRef = useRef(null);
   const [name, setName] = useState({value: '', error: ''});
   const [address, setAddress] = useState({value: '', error: ''});
   const [phone, setPhone] = useState({value: '', error: ''});
@@ -43,7 +45,9 @@ export default function FillProfile({route, navigation}) {
           style={styles.image}
         />
 
-        <TouchableOpacity style={styles.whitePen}>
+        <TouchableOpacity
+          style={styles.whitePen}
+          onPress={() => actionSheetRef.current?.show()}>
           <Image
             source={require('../assets/white-pen.png')}
             style={styles.whitePenImage}
@@ -98,6 +102,27 @@ export default function FillProfile({route, navigation}) {
         defaultButtonText="Gender"
       />
 
+      <ActionSheet ref={actionSheetRef}>
+        <View style={styles.actionSheetContainer}>
+          <Button
+            mode="outlined"
+            onPress={() => {
+              actionSheetRef.current?.hide();
+              navigation.navigate('PhotoCamera');
+            }}>
+            Select from library
+          </Button>
+          <Button
+            mode="outlined"
+            onPress={() => {
+              actionSheetRef.current?.hide();
+              navigation.navigate('PhotoCamera');
+            }}>
+            Take another picture
+          </Button>
+        </View>
+      </ActionSheet>
+
       <Button mode="contained" onPress={onSignUpPressed}>
         Continue
       </Button>
@@ -133,5 +158,9 @@ const styles = StyleSheet.create({
     right: 30,
     padding: 5,
     borderRadius: 10,
+  },
+  actionSheetContainer: {
+    height: 200,
+    padding: 10,
   },
 });
