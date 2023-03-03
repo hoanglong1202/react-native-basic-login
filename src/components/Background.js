@@ -24,7 +24,8 @@ export default function Background({children}) {
 const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
-    backgroundColor: theme.colors.surface,
+    backgroundColor: theme.colors.background,
+    justifyContent: 'center',
   },
   background: {
     flex: 1,
@@ -32,9 +33,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 5,
     width: '100%',
-    maxWidth: 340,
+    // maxWidth: 340,
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',

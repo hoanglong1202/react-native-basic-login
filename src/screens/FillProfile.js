@@ -1,16 +1,15 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import Background from '../components/Background';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import TextInput from '../components/TextInput';
+import {theme} from '../core/theme';
 import {emailValidator} from '../helpers/emailValidator';
 import {nameValidator} from '../helpers/nameValidator';
 
 export default function FillProfile({route, navigation}) {
-  const {imageUri} = route.params;
-  console.log(imageUri);
   const [email, setEmail] = useState({value: '', error: ''});
   const [name, setName] = useState({value: '', error: ''});
   const [address, setAddress] = useState({value: '', error: ''});
@@ -35,7 +34,21 @@ export default function FillProfile({route, navigation}) {
     <Background>
       <Header>Fill your profile</Header>
       <View style={styles.imageContainer}>
-        <Image source={{uri: imageUri}} style={styles.image} />
+        <Image
+          source={
+            route.params?.imageUri
+              ? {uri: route.params?.imageUri}
+              : require('../assets/avatar.png')
+          }
+          style={styles.image}
+        />
+
+        <TouchableOpacity style={styles.whitePen}>
+          <Image
+            source={require('../assets/white-pen.png')}
+            style={styles.whitePenImage}
+          />
+        </TouchableOpacity>
       </View>
       <TextInput
         label="Name"
@@ -107,5 +120,18 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
     borderRadius: 100,
+  },
+  whitePenImage: {
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+  },
+  whitePen: {
+    backgroundColor: theme.colors.primary,
+    position: 'absolute',
+    bottom: 20,
+    right: 30,
+    padding: 5,
+    borderRadius: 10,
   },
 });
