@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   text: {
-    fontWeight: 'bold',
-    fontSize: 15,
+    fontFamily: 'SourceSansPro-Bold',
+    fontSize: 16,
     lineHeight: 26,
   },
 });

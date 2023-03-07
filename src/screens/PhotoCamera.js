@@ -25,7 +25,7 @@ export default function PhotoCamera({navigation}) {
 
   const openImageLibrary = async () => {
     const result = await launchImageLibrary();
-    const uri = result.assets?.uri;
+    const uri = result.assets[0]?.uri;
     if (uri) {
       navigation.navigate('FillProfile', {imageUri: uri});
     }

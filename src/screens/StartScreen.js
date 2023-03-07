@@ -1,7 +1,6 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Divider, Text} from 'react-native-paper';
-import {Camera} from 'react-native-vision-camera';
 import Background from '../components/Background';
 import Button from '../components/Button';
 import Header from '../components/Header';
@@ -16,18 +15,18 @@ export default function StartScreen({navigation}) {
       <Header>Let's you in</Header>
       <TouchableOpacity style={styles.button}>
         <Image source={require('../assets/fb.png')} style={styles.iconBtn} />
-        <Text>Continue with Facebook</Text>
+        <Text style={styles.title}>Continue with Facebook</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
         <Image
           source={require('../assets/google.jpg')}
           style={styles.iconBtn}
         />
-        <Text>Continue with Google</Text>
+        <Text style={styles.title}>Continue with Google</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
         <Image source={require('../assets/apple.png')} style={styles.iconBtn} />
-        <Text>Continue with Apple</Text>
+        <Text style={styles.title}>Continue with Apple</Text>
       </TouchableOpacity>
 
       <Divider />
@@ -44,11 +43,11 @@ export default function StartScreen({navigation}) {
       <Button
         mode="contained"
         buttonColor={theme.colors.primary}
-        onPress={() => navigation.navigate('PhotoCamera')}>
+        onPress={() => navigation.navigate('LoginScreen')}>
         Sign in with password
       </Button>
       <View style={styles.row}>
-        <Text>Don't have an account? </Text>
+        <Text style={styles.smallTitle}>Don't have an account? </Text>
         <TouchableOpacity onPress={() => navigation.replace('RegisterScreen')}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
@@ -62,8 +61,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     margin: 10,
   },
+  title: {
+    fontFamily: 'SourceSansPro-Regular',
+    fontSize: 16,
+  },
+  smallTitle: {
+    fontFamily: 'SourceSansPro-Regular',
+  },
   link: {
-    fontWeight: 'bold',
+    fontFamily: 'SourceSansPro-Bold',
     color: theme.colors.primary,
   },
   button: {

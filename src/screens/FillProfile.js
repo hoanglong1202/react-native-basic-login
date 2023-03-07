@@ -37,7 +37,7 @@ export default function FillProfile({route, navigation}) {
   const openImageLibrary = async () => {
     actionSheetRef.current?.hide();
     const result = await launchImageLibrary();
-    const uri = result.assets?.uri;
+    const uri = result.assets[0]?.uri;
     if (uri) {
       setImageUri(uri);
     }

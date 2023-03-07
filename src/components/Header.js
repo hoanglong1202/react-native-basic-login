@@ -11,10 +11,10 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 28,
     color: theme.colors.secondary,
-    fontWeight: 'bold',
     paddingVertical: 6,
     marginBottom: 6,
     width: '100%',
     textAlign: 'center',
+    fontFamily: 'SourceSansPro-Bold',
   },
 });
