@@ -12,6 +12,7 @@ import {nameValidator} from '../helpers/nameValidator';
 
 export default function FillProfile({route, navigation}) {
   const [email, setEmail] = useState({value: '', error: ''});
+  const [imageUri, setImageUri] = useState(() => route?.params?.imageUri);
   const actionSheetRef = useRef(null);
   const actionGenderSheetRef = useRef(null);
   const [name, setName] = useState({value: '', error: ''});
@@ -35,7 +36,11 @@ export default function FillProfile({route, navigation}) {
 
   const openImageLibrary = async () => {
     actionSheetRef.current?.hide();
-    await launchImageLibrary();
+    const result = await launchImageLibrary();
+    const uri = result.assets?.uri;
+    if (uri) {
+      setImageUri(uri);
+    }
   };
 
   const changeGender = async gender => {
@@ -48,11 +53,7 @@ export default function FillProfile({route, navigation}) {
       <Header>Fill your profile</Header>
       <View style={styles.imageContainer}>
         <Image
-          source={
-            route.params?.imageUri
-              ? {uri: route.params?.imageUri}
-              : require('../assets/avatar.png')
-          }
+          source={imageUri ? {uri: imageUri} : require('../assets/avatar.png')}
           style={styles.image}
         />
 

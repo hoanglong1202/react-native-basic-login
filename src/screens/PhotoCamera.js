@@ -1,6 +1,5 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {
-  Alert,
   Dimensions,
   Image,
   StyleSheet,
@@ -9,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
+import {launchImageLibrary} from 'react-native-image-picker';
 import {theme} from '../core/theme';
 
 const windowWidth = Dimensions.get('window').width;
@@ -21,6 +21,14 @@ export default function PhotoCamera({navigation}) {
     const data = await camera.takePictureAsync(options);
     setImage(data.uri);
     navigation.navigate('FillProfile', {imageUri: data.uri});
+  };
+
+  const openImageLibrary = async () => {
+    const result = await launchImageLibrary();
+    const uri = result.assets?.uri;
+    if (uri) {
+      navigation.navigate('FillProfile', {imageUri: uri});
+    }
   };
 
   return (
@@ -47,14 +55,33 @@ export default function PhotoCamera({navigation}) {
           return (
             <View style={styles.wrapperButton}>
               {/* <Image source={{uri: image}} style={{width: 100, height: 100}} /> */}
-              <TouchableOpacity
-                onPress={() => takePicture(camera)}
-                style={styles.button}>
-                <Image
-                  source={require('../assets/camera.png')}
-                  style={styles.image}
-                />
-              </TouchableOpacity>
+
+              <View style={styles.wrapperButton}>
+                <TouchableOpacity
+                  onPress={openImageLibrary}
+                  style={styles.libraryButton}>
+                  <Image
+                    source={require('../assets/image.png')}
+                    style={styles.smallImage}
+                  />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => takePicture(camera)}
+                  style={styles.button}>
+                  <Image
+                    source={require('../assets/camera.png')}
+                    style={styles.image}
+                  />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.libraryButton}>
+                  <Image
+                    source={require('../assets/disk.png')}
+                    style={styles.smallImage}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
           );
         }}
@@ -78,6 +105,8 @@ const styles = StyleSheet.create({
     height: 100,
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
   button: {
     width: 100,
@@ -87,10 +116,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 100,
     backgroundColor: theme.colors.primary,
+    marginHorizontal: 10,
   },
   image: {
     width: 40,
     height: 40,
     borderRadius: 15,
+  },
+  smallImage: {
+    width: 20,
+    height: 20,
+  },
+  libraryButton: {
+    width: 50,
+    height: 50,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 100,
+    backgroundColor: theme.colors.third,
+    marginHorizontal: 10,
   },
 });
