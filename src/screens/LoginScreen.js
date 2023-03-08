@@ -31,6 +31,24 @@ export default function LoginScreen({navigation}) {
     });
   };
 
+  const checkPassword = pass => {
+    const passwordError = passwordValidator(pass);
+    if (passwordError) {
+      setPassword({value: pass, error: passwordError});
+      return;
+    }
+    setPassword({value: pass, error: ''});
+  };
+
+  const checkEmail = email => {
+    const emailError = emailValidator(email);
+    if (emailError) {
+      setEmail({value: email, error: emailError});
+      return;
+    }
+    setEmail({value: email, error: ''});
+  };
+
   return (
     <Background>
       <BackButton goBack={navigation.goBack} />
@@ -40,7 +58,7 @@ export default function LoginScreen({navigation}) {
         label="Email"
         returnKeyType="next"
         value={email.value}
-        onChangeText={text => setEmail({value: text, error: ''})}
+        onChangeText={text => checkEmail(text)}
         error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"
@@ -52,7 +70,7 @@ export default function LoginScreen({navigation}) {
         label="Password"
         returnKeyType="done"
         value={password.value}
-        onChangeText={text => setPassword({value: text, error: ''})}
+        onChangeText={text => checkPassword(text)}
         error={!!password.error}
         errorText={password.error}
         secureTextEntry
@@ -60,7 +78,10 @@ export default function LoginScreen({navigation}) {
 
       <RememberButton />
 
-      <Button mode="contained" onPress={onLoginPressed}>
+      <Button
+        mode="contained"
+        onPress={onLoginPressed}
+        disabled={!(email.value?.length && password.value?.length)}>
         Sign in
       </Button>
 

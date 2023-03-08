@@ -48,6 +48,24 @@ export default function FillProfile({route, navigation}) {
     setGender({value: gender, error: ''});
   };
 
+  const checkName = name => {
+    const nameError = nameValidator(name);
+    if (nameError) {
+      setName({value: name, error: nameError});
+      return;
+    }
+    setName({value: name, error: ''});
+  };
+
+  const checkEmail = email => {
+    const emailError = emailValidator(email);
+    if (emailError) {
+      setEmail({value: email, error: emailError});
+      return;
+    }
+    setEmail({value: email, error: ''});
+  };
+
   return (
     <Background>
       <Header>Fill your profile</Header>
@@ -70,7 +88,7 @@ export default function FillProfile({route, navigation}) {
         label="Name"
         returnKeyType="next"
         value={name.value}
-        onChangeText={text => setName({value: text, error: ''})}
+        onChangeText={text => checkName(text)}
         error={!!name.error}
         errorText={name.error}
       />
@@ -78,7 +96,7 @@ export default function FillProfile({route, navigation}) {
         label="Email"
         returnKeyType="next"
         value={email.value}
-        onChangeText={text => setEmail({value: text, error: ''})}
+        onChangeText={text => checkEmail(text)}
         error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"
@@ -132,7 +150,10 @@ export default function FillProfile({route, navigation}) {
         </View>
       </ActionSheet>
 
-      <Button mode="contained" onPress={onSignUpPressed}>
+      <Button
+        mode="contained"
+        onPress={onSignUpPressed}
+        disabled={!(email.value?.length && name.value?.length)}>
         Continue
       </Button>
     </Background>
