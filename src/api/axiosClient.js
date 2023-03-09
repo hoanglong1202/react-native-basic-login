@@ -17,6 +17,7 @@ axiosClient.interceptors.request.use(
   },
   function (error) {
     // Do something with request error
+    console.log('error 1');
     return Promise.reject(error);
   },
 );
@@ -24,6 +25,7 @@ axiosClient.interceptors.request.use(
 // Add a response interceptor
 axiosClient.interceptors.response.use(
   function (response) {
+    console.log('response', response);
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     return response;
@@ -31,6 +33,7 @@ axiosClient.interceptors.response.use(
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
+    console.log('error 2', error);
     return Promise.reject(error);
   },
 );

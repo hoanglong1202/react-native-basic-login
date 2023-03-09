@@ -13,23 +13,36 @@ import {passwordValidator} from '../helpers/passwordValidator';
 import {nameValidator} from '../helpers/nameValidator';
 import SocialList from '../components/SocialList';
 import RememberButton from '../components/RememberButton';
+import authService from '../api/auth.service';
 
 export default function RegisterScreen({navigation}) {
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
 
-  const onSignUpPressed = () => {
-    const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
-    if (emailError || passwordError) {
-      setEmail({...email, error: emailError});
-      setPassword({...password, error: passwordError});
-      return;
+  const onSignUpPressed = async () => {
+    try {
+      const emailError = emailValidator(email.value);
+      const passwordError = passwordValidator(password.value);
+      if (emailError || passwordError) {
+        setEmail({...email, error: emailError});
+        setPassword({...password, error: passwordError});
+        return;
+      }
+      const result = await authService.register({
+        email: email.value,
+        password: password.value,
+        domain_code: '1234abcd',
+      });
+
+      if (result.status_code === 201) {
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Dashboard'}],
+        });
+      }
+    } catch (error) {
+      setEmail({...email, error: 'Something wrong!'});
     }
-    navigation.reset({
-      index: 0,
-      routes: [{name: 'Dashboard'}],
-    });
   };
 
   const checkPassword = pass => {

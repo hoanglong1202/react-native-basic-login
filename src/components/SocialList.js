@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   iconBtn: {
-    width: 25,
-    height: 25,
+    width: 35,
+    height: 35,
   },
   iconContainer: {
     display: 'flex',
