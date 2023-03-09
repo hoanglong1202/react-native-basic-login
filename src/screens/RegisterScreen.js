@@ -41,13 +41,13 @@ export default function RegisterScreen({navigation}) {
     setPassword({value: pass, error: ''});
   };
 
-  const checkEmail = email => {
-    const emailError = emailValidator(email);
+  const checkEmail = mail => {
+    const emailError = emailValidator(mail);
     if (emailError) {
-      setEmail({value: email, error: emailError});
+      setEmail({value: mail, error: emailError});
       return;
     }
-    setEmail({value: email, error: ''});
+    setEmail({value: mail, error: ''});
   };
 
   return (

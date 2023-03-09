@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Paragraph, Text} from 'react-native-paper';
+import authService from '../api/auth.service';
 import BackButton from '../components/BackButton';
 import Background from '../components/Background';
 import Button from '../components/Button';
@@ -11,42 +12,41 @@ import SocialList from '../components/SocialList';
 import TextInput from '../components/TextInput';
 import {theme} from '../core/theme';
 import {emailValidator} from '../helpers/emailValidator';
-import {passwordValidator} from '../helpers/passwordValidator';
 
 export default function LoginScreen({navigation}) {
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
 
-  const onLoginPressed = () => {
-    const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
-    if (emailError || passwordError) {
-      setEmail({...email, error: emailError});
-      setPassword({...password, error: passwordError});
-      return;
+  const onLoginPressed = async () => {
+    try {
+      const emailError = emailValidator(email.value);
+      if (emailError) {
+        setEmail({...email, error: emailError});
+        return;
+      }
+      const result = await authService.login({
+        email: email.value,
+        password: password.value,
+      });
+
+      if (result.status_code === 200) {
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Dashboard'}],
+        });
+      }
+    } catch (error) {
+      setEmail({...email, error: 'Wrong email or password!'});
     }
-    navigation.reset({
-      index: 0,
-      routes: [{name: 'Dashboard'}],
-    });
   };
 
-  const checkPassword = pass => {
-    const passwordError = passwordValidator(pass);
-    if (passwordError) {
-      setPassword({value: pass, error: passwordError});
-      return;
-    }
-    setPassword({value: pass, error: ''});
-  };
-
-  const checkEmail = email => {
-    const emailError = emailValidator(email);
+  const checkEmail = mail => {
+    const emailError = emailValidator(mail);
     if (emailError) {
-      setEmail({value: email, error: emailError});
+      setEmail({value: mail, error: emailError});
       return;
     }
-    setEmail({value: email, error: ''});
+    setEmail({value: mail, error: ''});
   };
 
   return (
@@ -70,7 +70,7 @@ export default function LoginScreen({navigation}) {
         label="Password"
         returnKeyType="done"
         value={password.value}
-        onChangeText={text => checkPassword(text)}
+        onChangeText={text => setPassword({value: text, error: ''})}
         error={!!password.error}
         errorText={password.error}
         secureTextEntry
