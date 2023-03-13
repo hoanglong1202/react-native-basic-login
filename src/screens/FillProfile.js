@@ -2,6 +2,7 @@ import React, {useRef, useState} from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import ActionSheet from 'react-native-actions-sheet';
 import {launchImageLibrary} from 'react-native-image-picker';
+import BackButton from '../components/BackButton';
 import Background from '../components/Background';
 import Button from '../components/Button';
 import Header from '../components/Header';
@@ -9,6 +10,7 @@ import TextInput from '../components/TextInput';
 import {theme} from '../core/theme';
 import {emailValidator} from '../helpers/emailValidator';
 import {nameValidator} from '../helpers/nameValidator';
+import {phoneValidator} from '../helpers/phoneValidator';
 
 export default function FillProfile({route, navigation}) {
   const [email, setEmail] = useState({value: '', error: ''});
@@ -23,15 +25,19 @@ export default function FillProfile({route, navigation}) {
   const onSignUpPressed = () => {
     const emailError = emailValidator(email.value);
     const nameError = nameValidator(name.value);
-    if (emailError || nameError) {
+    const phoneError = phoneValidator(phone.value);
+    if (emailError || nameError || phoneError) {
       setEmail({...email, error: emailError});
       setName({...name, error: nameError});
+      setPhone({...phone, error: phoneError});
       return;
     }
-    navigation.reset({
-      index: 0,
-      routes: [{name: 'InputPin'}],
-    });
+
+    navigation.navigate('InputPin');
+    // navigation.reset({
+    //   index: 0,
+    //   routes: [{name: 'InputPin'}],
+    // });
   };
 
   const openImageLibrary = async () => {
@@ -68,6 +74,7 @@ export default function FillProfile({route, navigation}) {
 
   return (
     <Background>
+      <BackButton goBack={navigation.goBack} />
       <Header>Fill your profile</Header>
       <View style={styles.imageContainer}>
         <Image
@@ -107,6 +114,8 @@ export default function FillProfile({route, navigation}) {
       <TextInput
         label="Phone"
         returnKeyType="next"
+        error={!!phone.error}
+        errorText={phone.error}
         value={phone.value}
         onChangeText={text => setPhone({value: text, error: ''})}
         keyboardType="numeric"
@@ -177,15 +186,15 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   whitePenImage: {
-    height: 20,
-    width: 20,
+    height: 25,
+    width: 25,
     borderRadius: 10,
   },
   whitePen: {
     backgroundColor: theme.colors.primary,
     position: 'absolute',
-    bottom: 20,
-    right: 30,
+    bottom: 10,
+    right: 20,
     padding: 5,
     borderRadius: 10,
   },

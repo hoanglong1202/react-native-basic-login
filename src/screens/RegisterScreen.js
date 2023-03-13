@@ -35,10 +35,11 @@ export default function RegisterScreen({navigation}) {
       });
 
       if (result.status_code === 201) {
-        navigation.reset({
-          index: 0,
-          routes: [{name: 'Dashboard'}],
-        });
+        navigation.navigate('Dashboard');
+        // navigation.reset({
+        //   index: 0,
+        //   routes: [{name: 'Dashboard'}],
+        // });
       }
     } catch (error) {
       setEmail({...email, error: 'Something wrong!'});

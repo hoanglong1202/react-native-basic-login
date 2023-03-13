@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import {Text} from 'react-native-paper';
+import BackButton from '../components/BackButton';
 import Background from '../components/Background';
 import Button from '../components/Button';
 import Header from '../components/Header';
@@ -11,6 +12,7 @@ import {theme} from '../core/theme';
 export default function VerifyIdentity({navigation}) {
   return (
     <Background>
+      <BackButton goBack={navigation.goBack} />
       <Header>Let's Verify Identity</Header>
       <Paragraph>
         We want to confirm your identity before you can use our service

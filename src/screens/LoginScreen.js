@@ -30,10 +30,11 @@ export default function LoginScreen({navigation}) {
       });
 
       if (result.status_code === 200) {
-        navigation.reset({
-          index: 0,
-          routes: [{name: 'Dashboard'}],
-        });
+        navigation.navigate('Dashboard');
+        // navigation.reset({
+        //   index: 0,
+        //   routes: [{name: 'Dashboard'}],
+        // });
       }
     } catch (error) {
       setEmail({...email, error: 'Wrong email or password!'});

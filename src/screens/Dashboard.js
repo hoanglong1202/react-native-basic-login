@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import {Text} from 'react-native-paper';
+import BackButton from '../components/BackButton';
 import Background from '../components/Background';
 import Button from '../components/Button';
 import Header from '../components/Header';
@@ -29,7 +30,7 @@ const ListItem = ({text}) => {
 
 export default function Dashboard({navigation}) {
   const items = [
-    'Make online payment',
+    'Make Online Payments',
     'Spend or save daily',
     'Gain exposure to financial assets',
     'Spend and manage money',
@@ -38,6 +39,7 @@ export default function Dashboard({navigation}) {
   ];
   return (
     <Background>
+      <BackButton goBack={navigation.goBack} />
       <Header>Reason for Using Us</Header>
       <Paragraph>
         We want to provide the best experience according to your need
@@ -49,11 +51,12 @@ export default function Dashboard({navigation}) {
 
       <Button
         mode="contained"
-        onPress={() =>
-          navigation.reset({
-            index: 0,
-            routes: [{name: 'VerifyIdentity'}],
-          })
+        onPress={
+          () => navigation.navigate('VerifyIdentity')
+          // navigation.reset({
+          //   index: 0,
+          //   routes: [{name: 'VerifyIdentity'}],
+          // })
         }>
         Continue
       </Button>
