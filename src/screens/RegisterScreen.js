@@ -14,6 +14,7 @@ import {nameValidator} from '../helpers/nameValidator';
 import SocialList from '../components/SocialList';
 import RememberButton from '../components/RememberButton';
 import authService from '../api/auth.service';
+import CheckBoxButton from '../components/RememberButton';
 
 export default function RegisterScreen({navigation}) {
   const [email, setEmail] = useState({value: '', error: ''});
@@ -95,7 +96,7 @@ export default function RegisterScreen({navigation}) {
         secureTextEntry
       />
 
-      <RememberButton />
+      <CheckBoxButton text="Remember me" />
 
       <Button
         mode="contained"

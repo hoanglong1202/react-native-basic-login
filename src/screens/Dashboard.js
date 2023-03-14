@@ -7,26 +7,8 @@ import Background from '../components/Background';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import Paragraph from '../components/Paragraph';
+import CheckBoxButton from '../components/RememberButton';
 import {theme} from '../core/theme';
-
-const ListItem = ({text}) => {
-  const [checked, setChecked] = React.useState(false);
-  return (
-    <TouchableOpacity
-      style={styles.rememberContainer}
-      onPress={() => setChecked(!checked)}>
-      <BouncyCheckbox
-        isChecked={checked}
-        iconStyle={{borderRadius: 10}}
-        innerIconStyle={{borderRadius: 10}}
-        fillColor={theme.colors.primary}
-        disableBuiltInState
-        onPress={() => setChecked(!checked)}
-      />
-      <Text style={styles.rememberText}>{text}</Text>
-    </TouchableOpacity>
-  );
-};
 
 export default function Dashboard({navigation}) {
   const items = [
@@ -46,7 +28,7 @@ export default function Dashboard({navigation}) {
       </Paragraph>
 
       {items.map((x, index) => (
-        <ListItem text={x} key={index} />
+        <CheckBoxButton text={x} key={index} isBordered={true} />
       ))}
 
       <Button

@@ -7,6 +7,7 @@ import Background from '../components/Background';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import Logo from '../components/Logo';
+import CheckBoxButton from '../components/RememberButton';
 import RememberButton from '../components/RememberButton';
 import SocialList from '../components/SocialList';
 import TextInput from '../components/TextInput';
@@ -77,7 +78,7 @@ export default function LoginScreen({navigation}) {
         secureTextEntry
       />
 
-      <RememberButton />
+      <CheckBoxButton text="Remember me" />
 
       <Button
         mode="contained"
